@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "693333109203",
+    "project_id": "second-brain-56cda",
+    "storage_bucket": "second-brain-56cda.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693333109203:android:23a01c59a7ae7c8f56e726",
+        "android_client_info": {
+          "package_name": "second.brain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693333109203-vnidpv9369rlj0peqadaurqmbunpnu28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "second.brain",
+            "certificate_hash": "3beb240d04fc166c1199deb36bc140a775bbffac"
+          }
+        },
+        {
+          "client_id": "693333109203-evfgh4s0jos6puas1nmutm0n4iaqjsum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGVPyMtF2iOOL7lJ_87VeScOI13ofbRO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693333109203-evfgh4s0jos6puas1nmutm0n4iaqjsum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
