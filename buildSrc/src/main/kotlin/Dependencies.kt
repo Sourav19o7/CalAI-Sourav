@@ -104,9 +104,6 @@ object AppDependencies {
 
     // Feature Modules
     const val ONBOARDING = ":feature-onboarding"
-    const val DASHBOARD = ":feature-dashboard"
-    const val TASKS = ":feature-add_tasks"
-    const val USER_TASKS = ":feature-user_tasks"
 
     // Resource Modules
     const val RESOURCES = ":main-resources"
@@ -248,9 +245,6 @@ fun DependencyHandler.addMiscDependencies() {
 // Feature Dependencies
 fun DependencyHandler.addFeatureDependencies() {
     implementation(project(AppDependencies.ONBOARDING))
-    implementation(project(AppDependencies.DASHBOARD))
-    implementation(project(AppDependencies.TASKS))
-    implementation(project(AppDependencies.USER_TASKS))
 }
 
 // Resource Dependencies

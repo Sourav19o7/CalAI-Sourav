@@ -1,6 +1,5 @@
 package second.brain.feature_onboarding.di
 
-import constants.BaseUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +29,7 @@ object OnboardingModule {
     @ViewModelScoped
     fun providesOnboardingApi(): OnboardingApiService {
         return Retrofit.Builder()
-            .baseUrl(BaseUrl.BASE_URL)
+            .baseUrl("http://localhost:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OnboardingApiService::class.java)

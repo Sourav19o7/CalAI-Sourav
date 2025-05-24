@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,8 +52,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import second.brain.feature_onboarding.presentation.state.OnboardingState
 import second.brain.main_resources.R
-import ui.composables.DrawableOnly
-import ui.composables.IconWithText
 
 @Composable
 fun OnboardingScreen(
@@ -82,19 +81,11 @@ fun OnboardingScreen(
                     .weight(1f)
                     .fillMaxSize()
             ) {
-                PagerScreens()
+
             }
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            IconWithText(
-                containerModifier = Modifier.padding(horizontal = 30.dp),
-                text = "Continue with Email",
-                icon = Icons.Default.Email,
-                backgroundColor = R.color.blue_2
-            ) {
-                navigateTo(ScreenConstants.SignUp)
-            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -105,25 +96,10 @@ fun OnboardingScreen(
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
 
-                DrawableOnly(
-                    containerModifier = Modifier.weight(1f),
-                    drawable = R.drawable.google,
-                    backgroundColor = R.color.transparent,
-                    borderColor = R.color.gray_1,
-                    tint = colorResource(R.color.pink_1)
-                ) {
+                Image(painter = painterResource(R.drawable.google), contentDescription = "", modifier = Modifier.size(40.dp).clickable {
                     signInWithGoogle()
-                }
+                })
 
-                DrawableOnly(
-                    containerModifier = Modifier.weight(1f),
-                    drawable = R.drawable.facebook,
-                    backgroundColor = R.color.transparent,
-                    borderColor = R.color.gray_1,
-                    tint = colorResource(R.color.blue_3)
-                ) {
-
-                }
 
             }
 
@@ -135,111 +111,6 @@ fun OnboardingScreen(
         }
     }
 }
-
-@Composable
-fun PagerScreens() {
-
-    val imageList = listOf(
-        R.drawable.onboarding_desk_1,
-        R.drawable.onboarding_desk_2,
-        R.drawable.onboarding_desk_3
-    )
-
-    val textList = listOf(
-        listOf(
-            "Task,",
-            "Calendar,",
-            "Chat"
-        ),
-        listOf(
-            "Work",
-            "Anywhere",
-            "Easily"
-        ),
-        listOf(
-            "Manage",
-            "Everything",
-            "on Phone"
-        )
-    )
-    val pagerState = rememberPagerState(
-        pageCount = {
-            imageList.size
-        }
-    )
-    val coroutineScope = rememberCoroutineScope()
-
-
-    LaunchedEffect(pagerState.currentPage) {
-        coroutineScope.launch {
-            delay(3000)
-            pagerState.scrollToPage(
-                (pagerState.currentPage + 1) % pagerState.pageCount
-            )
-        }
-    }
-
-    Image(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentScale = ContentScale.Crop,
-        painter = painterResource(imageList[pagerState.currentPage]),
-        contentDescription = null
-    )
-
-    Column {
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize(),
-            userScrollEnabled = false
-        ) { page ->
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-                    TextAnimation(
-                        textList = textList[page]
-                    )
-                }
-
-            }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            Modifier
-                .wrapContentHeight()
-                .padding(start = 30.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(imageList.size) { iteration ->
-                val color by animateColorAsState(
-                    targetValue =
-                    if ((pagerState.currentPage == iteration)) {
-                        colorResource(R.color.blue_2)
-                    } else {
-                        colorResource(
-                            R.color.gray_4
-                        )
-                    },
-                    label = ""
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .size(10.dp)
-                )
-            }
-        }
-    }
-}
-
 
 @Composable
 fun TextAnimation(

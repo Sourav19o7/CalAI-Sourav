@@ -19,11 +19,7 @@ import extension.sharedViewModel
 import kotlinx.coroutines.launch
 import second.brain.feature_onboarding.presentation.authentication.GoogleAuthClient
 import second.brain.feature_onboarding.presentation.event.OnboardingEvent
-import second.brain.feature_onboarding.presentation.ui.IntroScreen
 import second.brain.feature_onboarding.presentation.ui.OnboardingScreen
-import second.brain.feature_onboarding.presentation.ui.SignUpScreen
-import second.brain.feature_onboarding.presentation.ui.UserDetailsScreen
-import second.brain.feature_onboarding.presentation.ui.VerifyOTP
 import second.brain.feature_onboarding.presentation.viewmodel.OnboardingViewModel
 
 fun NavGraphBuilder.onboardingNavigation(
@@ -31,20 +27,8 @@ fun NavGraphBuilder.onboardingNavigation(
 ) {
 
     navigation<ScreenConstants.OnboardingParent>(
-        startDestination = ScreenConstants.IntroScreen
+        startDestination = ScreenConstants.OnboardingScreen
     ) {
-        composable<ScreenConstants.IntroScreen> {
-            val viewModel = it.sharedViewModel<OnboardingViewModel>(navController = navController)
-            val state by viewModel.state.collectAsState()
-
-            IntroScreen(
-                userLoggedIn = state.userLoggedIn
-            ) {
-                navController.navigate(
-                    it
-                )
-            }
-        }
         composable<ScreenConstants.OnboardingScreen> {
             val viewModel = it.sharedViewModel<OnboardingViewModel>(navController = navController)
             val state by viewModel.state.collectAsState()
@@ -83,19 +67,6 @@ fun NavGraphBuilder.onboardingNavigation(
                         OnboardingEvent.ResetGoogleState
                     )
 
-                    viewModel.onEvent(
-                        OnboardingEvent.CheckUserExists{ userExists ->
-                            if (userExists) {
-                                navController.navigate(
-                                    ScreenConstants.HomeScreen
-                                )
-                            } else{
-                                navController.navigate(
-                                    ScreenConstants.UserDetails
-                                )
-                            }
-                        }
-                    )
                 }
             }
 
@@ -115,63 +86,6 @@ fun NavGraphBuilder.onboardingNavigation(
                 navigateTo = { screen ->
                     navController.navigate(
                         screen
-                    )
-                }
-            )
-        }
-
-        composable<ScreenConstants.SignUp> {
-
-            val viewModel = it.sharedViewModel<OnboardingViewModel>(navController = navController)
-            val state by viewModel.state.collectAsState()
-
-            SignUpScreen(
-                state = state,
-                onBack = {
-                    navController.popBackStack()
-                },
-                onEvent = viewModel::onEvent,
-                navigateTo = { screenName ->
-                    navController.navigate(
-                        screenName
-                    )
-                }
-            )
-        }
-
-        composable<ScreenConstants.UserDetails> {
-
-            val viewModel = it.sharedViewModel<OnboardingViewModel>(navController = navController)
-            val state by viewModel.state.collectAsState()
-
-            UserDetailsScreen(
-                state = state,
-                onEvent = viewModel::onEvent,
-                onBack = {
-                    navController.popBackStack()
-                },
-                navigateTo = { screenName ->
-                    navController.navigate(
-                        screenName
-                    )
-                }
-            )
-        }
-
-        composable<ScreenConstants.VerifyOTP> {
-
-            val viewModel = it.sharedViewModel<OnboardingViewModel>(navController = navController)
-            val state by viewModel.state.collectAsState()
-
-            VerifyOTP(
-                state = state,
-                onBack = {
-                    navController.popBackStack()
-                },
-                onEvent = viewModel::onEvent,
-                navigateTo = { screenName ->
-                    navController.navigate(
-                        screenName
                     )
                 }
             )

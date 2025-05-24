@@ -14,11 +14,6 @@ fun String.LoadImage(
     modifier: Modifier = Modifier,
     size: Dp,
 ) {
-
-    Log.i(
-        "StringExtensions",
-        "LoadImage: $this"
-    )
     SubcomposeAsyncImage(
         model = this,
         contentDescription = "thumbnail_holder",
