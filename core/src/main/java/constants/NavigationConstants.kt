@@ -11,6 +11,7 @@ sealed interface ScreenConstants {
     @Serializable
     data object OnboardingScreen : ScreenConstants
 
-
+    @Serializable
+    data object PostListScreen : ScreenConstants
 
 }

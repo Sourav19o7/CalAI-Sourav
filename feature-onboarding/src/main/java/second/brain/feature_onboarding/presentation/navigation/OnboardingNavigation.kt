@@ -7,7 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -41,6 +44,10 @@ fun NavGraphBuilder.onboardingNavigation(
                 )
             }
 
+            var navigated by remember {
+                mutableStateOf(false)
+            }
+
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.StartIntentSenderForResult(),
                 onResult = { result ->
@@ -66,6 +73,13 @@ fun NavGraphBuilder.onboardingNavigation(
                     viewModel.onEvent(
                         OnboardingEvent.ResetGoogleState
                     )
+
+                    if (!navigated) {
+                        navigated = true
+                        navController.navigate(
+                            ScreenConstants.PostListScreen
+                        )
+                    }
 
                 }
             }

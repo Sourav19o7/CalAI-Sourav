@@ -41,7 +41,7 @@ object Dependencies {
     const val FIREBASE_DYNAMIC_LINKS = "com.google.firebase:firebase-dynamic-links"
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics"
-    const val FIREBASE_FIRE_STORE = "com.google.firebase:firebase-firestore"
+    const val FIREBASE_FIRE_STORE = "com.google.firebase:firebase-firestore:25.0.0"
     const val FIREBASE_MESSAGING = "com.google.firebase:firebase-inappmessaging-display"
     const val FIREBASE_PERFORMANCE = "com.google.firebase:firebase-perf"
 
@@ -104,6 +104,7 @@ object AppDependencies {
 
     // Feature Modules
     const val ONBOARDING = ":feature-onboarding"
+    const val POST= ":feature-post"
 
     // Resource Modules
     const val RESOURCES = ":main-resources"
@@ -161,7 +162,7 @@ fun DependencyHandler.addFirebaseDependencies() {
     implementation(Dependencies.FIREBASE_CRASHLYTICS)
 //    implementation(Dependencies.FIREBASE_DYNAMIC_LINKS)
 //    implementation(Dependencies.FIREBASE_ANALYTICS)
-//    implementation(Dependencies.FIREBASE_FIRE_STORE)
+    implementation(Dependencies.FIREBASE_FIRE_STORE)
 //    implementation(Dependencies.FIREBASE_MESSAGING)
     implementation(Dependencies.FIREBASE_PERFORMANCE)
 }
@@ -245,6 +246,7 @@ fun DependencyHandler.addMiscDependencies() {
 // Feature Dependencies
 fun DependencyHandler.addFeatureDependencies() {
     implementation(project(AppDependencies.ONBOARDING))
+    implementation(project(AppDependencies.POST))
 }
 
 // Resource Dependencies
