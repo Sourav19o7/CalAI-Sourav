@@ -15,6 +15,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.v412)
 
     addFirebaseDependencies()
     addGoogleAuthDependencies()
@@ -23,5 +24,7 @@ dependencies {
     addResourceDependencies()
     addCoreDependencies()
     addNetworkingDependencies()
+    addTestDependencies()
+    addAndroidTestDependencies()
 
 }
