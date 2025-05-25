@@ -1,6 +1,7 @@
 package second.brain.feature_onboarding.presentation.navigation
 
 import android.app.Activity.RESULT_OK
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
@@ -26,7 +28,8 @@ import second.brain.feature_onboarding.presentation.ui.OnboardingScreen
 import second.brain.feature_onboarding.presentation.viewmodel.OnboardingViewModel
 
 fun NavGraphBuilder.onboardingNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    setUserActive : () -> Unit
 ) {
 
     navigation<ScreenConstants.OnboardingParent>(
@@ -76,6 +79,8 @@ fun NavGraphBuilder.onboardingNavigation(
 
                     if (!navigated) {
                         navigated = true
+                        setUserActive()
+                        navController.popBackStack()
                         navController.navigate(
                             ScreenConstants.PostListScreen
                         )
@@ -86,6 +91,10 @@ fun NavGraphBuilder.onboardingNavigation(
 
             LaunchedEffect(key1 = state.userLoggedIn) {
                 if(state.userLoggedIn){
+                    Log.i(
+                        "Coming from Here",
+                        "jhgf"
+                    )
                     navController.popBackStack()
                     navController.navigate(
                         ScreenConstants.PostListScreen

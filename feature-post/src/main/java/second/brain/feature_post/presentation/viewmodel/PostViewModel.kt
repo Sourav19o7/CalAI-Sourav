@@ -94,6 +94,29 @@ class PostsViewModel @Inject constructor(
             is PostsEvent.LoadUserPosts -> {
                 loadUserPosts(event.userId)
             }
+
+            is PostsEvent.SetUserActiveStatus -> {
+                setUserActiveStatus(event.userId, event.isActive)
+            }
+        }
+    }
+
+    private fun setUserActiveStatus(userId: String, isActive: Boolean) {
+        viewModelScope.launch {
+            val result = postsRepository.setUserActiveStatus(userId, isActive)
+
+            when (result.status) {
+                Status.SUCCESS -> {
+                    Log.d(TAG, "User active status updated to $isActive for user: $userId")
+                }
+
+                Status.ERROR -> {
+                    Log.e(TAG, "Error updating user active status: ${result.message}")
+                }
+
+                Status.LOADING -> {
+                }
+            }
         }
     }
 
@@ -297,6 +320,13 @@ class PostsViewModel @Inject constructor(
                 Status.LOADING -> {
                 }
             }
+        }
+    }
+
+    fun onUserLogout() {
+        val currentUserId = _state.value.currentUserId
+        if (currentUserId.isNotEmpty()) {
+            setUserActiveStatus(currentUserId, false)
         }
     }
 

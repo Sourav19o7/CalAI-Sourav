@@ -44,7 +44,8 @@ class PostsRepositoryImpl @Inject constructor(
                 timestamp = System.currentTimeMillis(),
                 likesCount = 0,
                 likedBy = emptyList(),
-                commentsCount = 0
+                commentsCount = 0,
+                userActive = true
             )
 
             val docRef = firestore.collection(POSTS_COLLECTION).document()
@@ -178,6 +179,29 @@ class PostsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun setUserActiveStatus(userId: String, isActive: Boolean): Resource<Boolean> {
+        return try {
+            val querySnapshot = firestore.collection(POSTS_COLLECTION)
+                .whereEqualTo("userId", userId)
+                .get()
+                .await()
+
+            val batch = firestore.batch()
+
+            querySnapshot.documents.forEach { document ->
+                batch.update(document.reference, "userActive", isActive)
+            }
+
+            batch.commit().await()
+
+            Log.d(TAG, "Updated userActive status to $isActive for ${querySnapshot.size()} posts by user: $userId")
+            responseHandler.handleSuccess(true)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating user active status", e)
+            responseHandler.handleException<Boolean>(e, "", "setUserActiveStatus", "setUserActiveStatus")
+        }
+    }
+
     override fun getPostsFlow(): Flow<List<Post>> = callbackFlow {
         val listener = firestore.collection(POSTS_COLLECTION)
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -196,7 +220,7 @@ class PostsRepositoryImpl @Inject constructor(
                             null
                         }
                     }
-                    trySend(posts)
+                    trySend(posts.filter { it.userActive })
                 }
             }
 

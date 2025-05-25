@@ -9,4 +9,5 @@ sealed interface PostsEvent {
     data class UnlikePost(val postId: String) : PostsEvent
     data class DeletePost(val postId: String) : PostsEvent
     data class LoadUserPosts(val userId: String) : PostsEvent
+    data class SetUserActiveStatus(val userId: String, val isActive: Boolean) : PostsEvent
 }

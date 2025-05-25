@@ -13,4 +13,5 @@ interface PostsRepository {
     suspend fun unlikePost(postId: String, userId: String): Resource<Boolean>
     suspend fun deletePost(postId: String, userId: String): Resource<Boolean>
     fun getPostsFlow(): Flow<List<Post>>
+    suspend fun setUserActiveStatus(userId: String, isActive: Boolean): Resource<Boolean>
 }

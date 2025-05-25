@@ -47,15 +47,18 @@ class MainActivity : AppCompatActivity() {
                         AppTopBar(
                             navController = navController,
                             logout = {
-                                rootViewModel.logoutUser()
-                                navController.navigate(ScreenConstants.OnboardingParent) {
-                                    popUpTo<ScreenConstants.OnboardingParent>()
-                                    launchSingleTop = true
+                                rootViewModel.logoutUser(){
+                                    navController.popBackStack()
+                                    navController.navigate(ScreenConstants.OnboardingParent)
+
                                 }
+
                             }
                         )
                         Box(modifier = Modifier.padding(bottom = bottomPadding)) {
-                            AppNavHost(navController = navController)
+                            AppNavHost(navController = navController, setUserActive = {
+                                rootViewModel.setUserActive()
+                            })
                         }
                     }
                 }

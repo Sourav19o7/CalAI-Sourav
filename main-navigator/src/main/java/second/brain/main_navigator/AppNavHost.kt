@@ -13,12 +13,13 @@ import second.brain.feature_post.presentation.ui.PostsListScreen
 import second.brain.feature_post.presentation.viewmodel.PostsViewModel
 
 @Composable
-fun AppNavHost(navController: NavHostController) {
+fun AppNavHost(navController: NavHostController, setUserActive: () -> Unit) {
 
     NavHost(navController = navController, startDestination = ScreenConstants.OnboardingParent) {
 
         onboardingNavigation(
-            navController = navController
+            navController = navController,
+            setUserActive = setUserActive
         )
 
         composable<ScreenConstants.PostListScreen> {
@@ -30,9 +31,11 @@ fun AppNavHost(navController: NavHostController) {
             PostsListScreen(
                 viewModel = viewModel,
                 onCreatePostClick = {
-                    viewModel.onEvent(PostsEvent.CreatePost(
-                       it
-                    ))
+                    viewModel.onEvent(
+                        PostsEvent.CreatePost(
+                            it
+                        )
+                    )
                 }
             )
         }
