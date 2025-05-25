@@ -106,7 +106,7 @@ val AppTypography = Typography(
         letterSpacing = 0.sp
     ),
     bodySmall = TextStyle( // Body (S) Bold
-        fontFamily = LexendBold,
+        fontFamily = LexendNormal,
         fontSize = 13.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp

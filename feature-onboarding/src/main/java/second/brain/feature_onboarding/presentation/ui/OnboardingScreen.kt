@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Text
@@ -70,44 +71,24 @@ fun OnboardingScreen(
             ).show()
         }
     }
-    Box {
-        Column(
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(
             modifier = Modifier
-                .fillMaxSize(), verticalArrangement = Arrangement.Bottom
+                .background(
+                    color = colorResource(R.color.blue_1),
+                    shape = RoundedCornerShape(30.dp)
+                )
+                .padding(vertical = 10.dp, horizontal = 20.dp)
+                .clickable(null, null, onClick = { signInWithGoogle() })
         ) {
-
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
-            ) {
-
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-
-                Image(painter = painterResource(R.drawable.google), contentDescription = "", modifier = Modifier.size(40.dp).clickable {
-                    signInWithGoogle()
-                })
-
-
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            TermsAndConditions()
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "Sign In With Google",
+                color = Color.White,
+                fontFamily = FontFamily(
+                    Font(R.font.medium)
+                ),
+                fontSize = 18.sp
+            )
         }
     }
 }
@@ -163,24 +144,4 @@ fun TextAnimation(
             }
         }
     }
-}
-
-
-@Composable
-fun TermsAndConditions() {
-
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 60.dp),
-        textAlign = TextAlign.Center,
-        text = "By continuing, you agree to our Terms of Service and Privacy Policy",
-        color = colorResource(R.color.gray_1),
-        fontFamily = FontFamily(
-            Font(R.font.light)
-        ),
-        lineHeight = 20.sp,
-        fontSize = 12.sp
-    )
-
 }

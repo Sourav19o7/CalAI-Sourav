@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.repository.DataPreferencesManager
 import data.repository.DataRepository
+import domain.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -52,6 +53,21 @@ class OnboardingViewModel @Inject constructor(
                             photoUrl = event.signInResult.data.photoUrl
                         )
                     }
+
+                    viewModelScope.launch {
+
+                        val userData = event.signInResult.data
+                        dataRepository.updateData(
+                            User(
+                                name = userData.name,
+                                email = userData.email,
+                                profileImage = userData.photoUrl,
+                                userId = userData.id
+                            )
+                        )
+                    }
+
+                    userLoggedIn()
                 }
             }
 

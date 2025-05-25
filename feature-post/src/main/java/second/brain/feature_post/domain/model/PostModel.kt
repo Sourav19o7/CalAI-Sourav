@@ -20,7 +20,9 @@ data class Post(
 @Serializable
 data class CreatePostRequest(
     val content: String,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val name : String = "Buddy",
+    val email : String = ""
 )
 
 @Serializable

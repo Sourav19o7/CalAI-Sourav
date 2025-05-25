@@ -84,6 +84,15 @@ fun NavGraphBuilder.onboardingNavigation(
                 }
             }
 
+            LaunchedEffect(key1 = state.userLoggedIn) {
+                if(state.userLoggedIn){
+                    navController.popBackStack()
+                    navController.navigate(
+                        ScreenConstants.PostListScreen
+                    )
+                }
+            }
+
             OnboardingScreen(
                 state = state,
                 signInWithGoogle = {
