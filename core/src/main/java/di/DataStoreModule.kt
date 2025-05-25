@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 private const val DATA_STORE_FILE_NAME = "user_preference.json"
-private const val ACTIVITY_DATA_STORE_FILE_NAME = "activity_preference.json"
 
 @InstallIn(SingletonComponent::class)
 @Module

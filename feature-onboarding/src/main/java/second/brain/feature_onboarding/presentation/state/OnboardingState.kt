@@ -11,7 +11,6 @@ data class OnboardingState (
     val email : String = "",
     val photoUrl : String = "",
     val phoneNumber : String = "",
-    val otp : String = "",
 
     // Details validity states
     val isEmailValid : Boolean = false,

@@ -18,19 +18,16 @@ open class ResponseHandler @Inject constructor(
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 ) {
 
-    // Handles successful responses
     fun <T : Any> handleSuccess(
         data: T?
     ): Resource<T> {
         return if (data == null) {
             Resource.error("No data found", null)
         } else {
-            // Return successful resource if data is valid
             Resource.success(data)
         }
     }
 
-    // Handles exceptions during API calls
     fun <T : Any> handleException(
         e: Exception,
         errorJwtToken: String,
@@ -52,35 +49,6 @@ open class ResponseHandler @Inject constructor(
         }
     }
 
-    // Logs API failures and sends failure email notifications
-    private fun logApiFailure(
-        errorMessage: String
-    ) {
-        scope.launch {
-            Log.i("API Failure", errorMessage)
-        }
-    }
-
-    // Builds error message for logging or email
-    private fun buildErrorMessage(
-        errorJwtToken: String,
-        endPoint: String,
-        functionName: String,
-        email: String,
-        errorMessage: String
-    ): String {
-        return """
-            ${context.packageManager.getPackageInfo(context.packageName, 0).versionName}  API Failed.
-            
-            Error: $errorMessage
-            Endpoint: $endPoint
-            Jwt Token: $errorJwtToken
-            Method: $functionName
-            Email: $email
-        """.trimIndent()
-    }
-
-    // Handles HTTP exceptions
     private fun <T : Any> handleHttpException(
         e: HttpException,
         errorJwtToken: String,
@@ -91,7 +59,6 @@ open class ResponseHandler @Inject constructor(
         return Resource.error(getErrorMessage(e.code()), null)
     }
 
-    // Returns error messages based on error codes
     private fun getErrorMessage(code: Int): String {
         return when (code) {
             ErrorCodes.SocketTimeOut.code -> "Timeout"
@@ -106,7 +73,6 @@ open class ResponseHandler @Inject constructor(
     }
 }
 
-// Enum class for handling specific error codes
 enum class ErrorCodes(val code: Int) {
     SocketTimeOut(-1)
 }

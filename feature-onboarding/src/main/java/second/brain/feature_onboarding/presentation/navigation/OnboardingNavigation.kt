@@ -72,7 +72,6 @@ fun NavGraphBuilder.onboardingNavigation(
             LaunchedEffect(state.isSignInSuccessful) {
                 if (state.isSignInSuccessful) {
 
-                    // Resetting States, in case user comes back to this screen
                     viewModel.onEvent(
                         OnboardingEvent.ResetGoogleState
                     )
@@ -114,11 +113,6 @@ fun NavGraphBuilder.onboardingNavigation(
                             )
                         }
                     }
-                },
-                navigateTo = { screen ->
-                    navController.navigate(
-                        screen
-                    )
                 }
             )
         }

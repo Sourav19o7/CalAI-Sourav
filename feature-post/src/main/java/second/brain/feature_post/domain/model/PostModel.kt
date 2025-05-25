@@ -25,10 +25,3 @@ data class CreatePostRequest(
     val name : String = "Buddy",
     val email : String = ""
 )
-
-@Serializable
-data class PostResponse(
-    val id: Int = 0,
-    val message: String = "",
-    val data: List<Post> = emptyList()
-)

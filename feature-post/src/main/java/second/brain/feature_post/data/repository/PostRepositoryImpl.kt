@@ -35,7 +35,7 @@ class PostsRepositoryImpl @Inject constructor(
             val currentUser = dataRepository.getData().first()
 
             val newPost = Post(
-                id = "", // Firestore will generate this
+                id = "",
                 userId = currentUser.userId ?: "",
                 userName = currentUser.name ?: "",
                 userProfileImage = currentUser.profileImage ?: "",
@@ -53,7 +53,6 @@ class PostsRepositoryImpl @Inject constructor(
 
             docRef.set(postWithId).await()
 
-            Log.d(TAG, "Post created successfully: ${postWithId.id}")
             responseHandler.handleSuccess(postWithId)
         } catch (e: Exception) {
             Log.e(TAG, "Error creating post", e)
@@ -77,7 +76,6 @@ class PostsRepositoryImpl @Inject constructor(
                 }
             }
 
-            Log.d(TAG, "Retrieved ${posts.size} posts")
             responseHandler.handleSuccess(posts)
         } catch (e: Exception) {
             Log.e(TAG, "Error getting posts", e)
@@ -102,7 +100,6 @@ class PostsRepositoryImpl @Inject constructor(
                 }
             }
 
-            Log.d(TAG, "Retrieved ${posts.size} posts for user: $userId")
             responseHandler.handleSuccess(posts)
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user posts", e)
@@ -126,7 +123,6 @@ class PostsRepositoryImpl @Inject constructor(
                 }
             }.await()
 
-            Log.d(TAG, "Post liked: $postId by $userId")
             responseHandler.handleSuccess(true)
         } catch (e: Exception) {
             Log.e(TAG, "Error liking post", e)
@@ -150,7 +146,6 @@ class PostsRepositoryImpl @Inject constructor(
                 }
             }.await()
 
-            Log.d(TAG, "Post unliked: $postId by $userId")
             responseHandler.handleSuccess(true)
         } catch (e: Exception) {
             Log.e(TAG, "Error unliking post", e)
@@ -164,7 +159,6 @@ class PostsRepositoryImpl @Inject constructor(
             val snapshot = postRef.get().await()
             val post = snapshot.toObject(Post::class.java)
 
-            // Check if user owns the post
             if (post?.userId == userId) {
                 postRef.delete().await()
                 Log.d(TAG, "Post deleted: $postId")

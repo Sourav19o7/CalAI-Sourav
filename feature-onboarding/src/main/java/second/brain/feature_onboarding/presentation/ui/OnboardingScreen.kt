@@ -58,7 +58,6 @@ import second.brain.main_resources.R
 fun OnboardingScreen(
     state: OnboardingState,
     signInWithGoogle: () -> Unit,
-    navigateTo: (ScreenConstants) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -89,59 +88,6 @@ fun OnboardingScreen(
                 ),
                 fontSize = 18.sp
             )
-        }
-    }
-}
-
-@Composable
-fun TextAnimation(
-    textList: List<String>
-) {
-
-    val animationDuration = 1000
-    var isVisible by remember { mutableStateOf(false) }
-
-
-    // This launches the animation for visibility when the screen appears
-    LaunchedEffect(Unit) {
-        // Delay the animation for a nice effect
-        isVisible = true
-    }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        textList.forEachIndexed { index, text ->
-            AnimatedVisibility(
-                visible = isVisible, enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = animationDuration,
-                        delayMillis = index * (animationDuration / 3)
-                    )
-                ) + slideIn(
-                    animationSpec = tween(
-                        durationMillis = animationDuration,
-                        delayMillis = index * (animationDuration / 3)
-                    ),
-                    initialOffset = {
-                        IntOffset(x = -100, y = 0)
-                    },
-                )
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 30.dp),
-                    lineHeight = 50.sp,
-                    text = text,
-                    fontSize = 40.sp,
-                    fontFamily = FontFamily(
-                        Font(R.font.semibold)
-                    ),
-                    color = Color.White
-                )
-            }
         }
     }
 }
